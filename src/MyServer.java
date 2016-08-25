@@ -18,8 +18,10 @@ public class MyServer {
                 Socket clientSocket = serverListener.accept();
                 System.out.println("Connection found!");
                 //start Thread on this connection
-
-                handleIncomingConnection(clientSocket);
+                ConnectionHandler myHandler = new ConnectionHandler(clientSocket);
+//                handleIncomingConnection(clientSocket);
+                Thread newHandlingThread = new Thread(myHandler);
+                newHandlingThread.start();
             }
 
         } catch (IOException exception) {
@@ -27,22 +29,5 @@ public class MyServer {
         }
     }
 
-    public void handleIncomingConnection(Socket clientSocket) throws IOException {
 
-
-        System.out.println("Now displaying info about who has connected to our server: ");
-        System.out.println("Connection from " + clientSocket.getInetAddress().getHostAddress());
-
-        //Read in info from client
-        BufferedReader inputFromClient = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        //Print output to client
-        PrintWriter outputToClient = new PrintWriter(clientSocket.getOutputStream(), true);
-
-        String inputLine;
-        while((inputLine = inputFromClient.readLine()) != null) {
-            System.out.println("Received message \"" + inputLine + "\" from " + clientSocket.toString());
-            outputToClient.write("Message received! :-)");
-        }
-
-    }
 }

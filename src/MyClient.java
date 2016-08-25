@@ -22,6 +22,7 @@ public class MyClient {
             // write message
             out.println("What up");
             String serverResponse = in.readLine();
+            System.out.println("Server's response: " + serverResponse);
 
             // close connection
             clientSocket.close();
