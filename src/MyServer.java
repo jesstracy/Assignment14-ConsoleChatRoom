@@ -14,10 +14,13 @@ public class MyServer {
             ServerSocket serverListener = new ServerSocket(8080);
             System.out.println("Waiting for a connection...");
 
-            Socket clientSocket = serverListener.accept();
-            System.out.println("Connection found!");
+            while (true) {
+                Socket clientSocket = serverListener.accept();
+                System.out.println("Connection found!");
+                //start Thread on this connection
 
-            handleIncomingConnection(clientSocket);
+                handleIncomingConnection(clientSocket);
+            }
 
         } catch (IOException exception) {
             exception.printStackTrace();
